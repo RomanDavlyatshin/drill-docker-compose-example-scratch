@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  my-local-app:
+    image: debug/my-local-app
+    ports:
+      - "4567:4567"
+    environment:
+      DB_HOST: postgres
+      # Remember to update the packagePrefixes at the end of this string!
+      JAVA_TOOL_OPTIONS: -agentpath:/data/agent/libdrill_agent.so=drillInstallationDir=/data/agent,adminAddress=wss://drill-admin:8090,agentId=my-local-app,groupId=my-local-app,buildVersion=0.1.0,logLevel=TRACE,packagePrefixes=io/spring
+    volumes:
+      - agent-files:/data
+    networks:
+      - drill4j-dev-network
+
+volumes:
+  agent-files:
+
+networks:
+  drill4j-dev-network:
